@@ -32,4 +32,10 @@ class TestTZ < Test::Unit::TestCase
     assert_equal(14, obj.h)
     assert_equal(10, obj.m)
   end
+
+  def test_int_conversion
+    obj = 1440.utc
+    assert_equal(14, obj.h)
+    assert_equal(40, obj.m)
+  end
 end

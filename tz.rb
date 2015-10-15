@@ -42,3 +42,9 @@ class String
     end
   end
 end
+
+class Fixnum
+  def utc
+    self.to_s.rjust(4, '0').utc
+  end
+end
