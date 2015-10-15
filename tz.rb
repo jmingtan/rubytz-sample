@@ -1,20 +1,26 @@
+TIMEZONES = {
+  :utc => 0,
+  :sgt => 8,
+  :mst => -7,
+}
+
 class TZ
   attr_reader :h, :m
 
-  def initialize(h, m, tz)
+  def initialize(h, m, tz = :utc)
     @h = (h + 24) % 24
     @m = (m + 60) % 60
     @tz = tz
   end
 
   def to_s
-    return "#{@h}:#{@m} #{@tz}"
+    return "#{@h}:#{@m} #{@tz.to_s.upcase}"
   end
 end
 
 class SGT < TZ
   def initialize(h, m)
-    super(h, m, 'SGT')
+    super(h, m, :sgt)
   end
 
   def utc
@@ -24,7 +30,7 @@ end
 
 class UTC < TZ
   def initialize(h, m)
-    super(h, m, 'UTC')
+    super(h, m, :utc)
   end
 
   def sgt
