@@ -44,7 +44,11 @@ class String
 end
 
 class Fixnum
-  def utc
-    self.to_s.rjust(4, '0').utc
+  def method_missing(name, *args)
+    if TIMEZONES.has_key? name
+      self.to_s.rjust(4, '0').send(name)
+    else
+      super(name, args)
+    end
   end
 end
