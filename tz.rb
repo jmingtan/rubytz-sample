@@ -13,33 +13,26 @@ class TZ
     @tz = tz
   end
 
+  def method_missing(name, *args)
+    if TIMEZONES.has_key? name
+      offset = TIMEZONES[name]
+      new_h = 0
+      if @tz == :utc
+        new_h = @h + offset
+      else
+        new_h = @h - TIMEZONES[@tz] + offset
+      end
+      TZ.new(new_h, @m, name)
+    end
+  end
+
   def to_s
     return "#{@h}:#{@m} #{@tz.to_s.upcase}"
   end
 end
 
-class SGT < TZ
-  def initialize(h, m)
-    super(h, m, :sgt)
-  end
-
-  def utc
-    UTC.new(@h - 8, @m)
-  end
-end
-
-class UTC < TZ
-  def initialize(h, m)
-    super(h, m, :utc)
-  end
-
-  def sgt
-    SGT.new(@h + 8, @m)
-  end
-end
-
 class String
   def utc
-    UTC.new(self[0..1].to_i, self[-2..-1].to_i)
+    TZ.new(self[0..1].to_i, self[-2..-1].to_i)
   end
 end
