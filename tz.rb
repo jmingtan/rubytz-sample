@@ -23,6 +23,8 @@ class TZ
         new_h = @h - TIMEZONES[@tz] + offset
       end
       TZ.new(new_h, @m, name)
+    else
+      super(name, args)
     end
   end
 
@@ -32,7 +34,11 @@ class TZ
 end
 
 class String
-  def utc
-    TZ.new(self[0..1].to_i, self[-2..-1].to_i)
+  def method_missing(name, *args)
+    if self.size >= 4 and TIMEZONES.has_key? name
+      TZ.new(self[0..1].to_i, self[-2..-1].to_i, name)
+    else
+      super(name, args)
+    end
   end
 end

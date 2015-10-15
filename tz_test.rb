@@ -28,7 +28,7 @@ class TestTZ < Test::Unit::TestCase
   end
 
   def test_sgt_conversion
-    obj = TZ.new(5, 10, :sgt).mst
+    obj = '0510'.sgt.mst
     assert_equal(14, obj.h)
     assert_equal(10, obj.m)
   end
