@@ -1,4 +1,6 @@
 class TZ
+  attr_reader :h, :m
+
   def initialize(h, m, tz)
     @h = (h + 24) % 24
     @m = (m + 60) % 60
